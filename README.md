@@ -106,6 +106,8 @@ Since this method is using a lot of new code that we did not cover in the course
 private static string GetInput(string prompt = "Enter your question: ")
 ```
 
+
+
 ## Detailed Explanation of `GetInput` and `ShowBubble` Methods
 
 ### `GetInput` Method
@@ -148,7 +150,7 @@ The `GetInput` method is responsible for displaying the main input prompt to the
    int consoleWidth = Console.WindowWidth;
    int writingAreaWidth = 60;
    int boxWidth = Math.Max(title.Length, prompt.Length + writingAreaWidth) + 6;
-   ValidateBoxSize(ref boxWidth);
+   if (boxWidth > consoleWidth) boxWidth = consoleWidth - 2;
    ```
 
 5. **Calculate Padding:**
@@ -224,7 +226,7 @@ The `ShowBubble` method is responsible for displaying messages in a styled "bubb
    int consoleWidth = Console.WindowWidth;
    int maxBoxWidth = consoleWidth / 2 + 20;
    int desiredWidth = Math.Min(text.Length + 6, maxBoxWidth);
-   ValidateBoxSize(ref desiredWidth);
+   if (desiredWidth > consoleWidth) desiredWidth = consoleWidth - 2;
    int leftPadding = (consoleWidth - desiredWidth) / 2;
    ```
 

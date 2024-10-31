@@ -308,12 +308,6 @@
         );
    }
 
-    private static void ValidateBoxSize(ref int boxWidth)
-    {
-        int consoleWidth = Console.WindowWidth;
-        if (boxWidth > consoleWidth) { boxWidth = consoleWidth - 2; }
-    }
-
     private static void ShowBubble(string text, ConsoleColor color = ConsoleColor.DarkGreen)
     {
         for (int i = 0; i < bubbles.Length; i++)
@@ -329,7 +323,8 @@
         int consoleWidth = Console.WindowWidth;
         int maxBoxWidth = consoleWidth / 2 + 20;
         int desiredWidth = Math.Min(text.Length + 6, maxBoxWidth);
-        ValidateBoxSize(ref desiredWidth);
+        if (desiredWidth > consoleWidth) { desiredWidth = consoleWidth - 2; }
+
         int leftPadding = (consoleWidth - desiredWidth) / 2;
 
         Console.ForegroundColor = color;
@@ -375,29 +370,28 @@
 
         int consoleWidth = Console.WindowWidth;
         int writingAreaWidth = 60;
-        int boxWidth = Math.Max(title.Length, prompt.Length + writingAreaWidth) + 6;
+        int desiredWidth = Math.Max(title.Length, prompt.Length + writingAreaWidth) + 6;
+        if (desiredWidth > consoleWidth) { desiredWidth = consoleWidth - 2; }
 
-        ValidateBoxSize(ref boxWidth);
+        int leftPadding = (consoleWidth - desiredWidth) / 2;
 
-        int leftPadding = (consoleWidth - boxWidth) / 2;
+        int titlePadding = (desiredWidth - 2 - title.Length) / 2;
 
-        int titlePadding = (boxWidth - 2 - title.Length) / 2;
+        Console.WriteLine(new string(' ', leftPadding) + "╔" + new string('═', desiredWidth - 2) + "╗");
+        Console.WriteLine(new string(' ', leftPadding) + "║" + new string(' ', titlePadding) + title + new string(' ', desiredWidth - 2 - titlePadding - title.Length) + "║");
+        Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', desiredWidth - 2) + "╣");
 
-        Console.WriteLine(new string(' ', leftPadding) + "╔" + new string('═', boxWidth - 2) + "╗");
-        Console.WriteLine(new string(' ', leftPadding) + "║" + new string(' ', titlePadding) + title + new string(' ', boxWidth - 2 - titlePadding - title.Length) + "║");
-        Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
+        Console.WriteLine(new string(' ', leftPadding) + $"║ {studentSection.PadRight(desiredWidth - 4)} ║");
+        for (int i = 0; i < students.Length; i++) Console.WriteLine(new string(' ', leftPadding) + $"║ - {students[i].PadRight(desiredWidth - 6)} ║");
+        Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', desiredWidth - 2) + "╣");
 
-        Console.WriteLine(new string(' ', leftPadding) + $"║ {studentSection.PadRight(boxWidth - 4)} ║");
-        for (int i = 0; i < students.Length; i++) Console.WriteLine(new string(' ', leftPadding) + $"║ - {students[i].PadRight(boxWidth - 6)} ║");
-        Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
+        Console.WriteLine(new string(' ', leftPadding) + $"║ {commandsSection.PadRight(desiredWidth - 4)} ║");
+        for (int i = 0; i < specialCommands.Length; i++) Console.WriteLine(new string(' ', leftPadding) + $"║ {specialCommands[i].PadRight(desiredWidth - 4)} ║");
+        Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', desiredWidth - 2) + "╣");
 
-        Console.WriteLine(new string(' ', leftPadding) + $"║ {commandsSection.PadRight(boxWidth - 4)} ║");
-        for (int i = 0; i < specialCommands.Length; i++) Console.WriteLine(new string(' ', leftPadding) + $"║ {specialCommands[i].PadRight(boxWidth - 4)} ║");
-        Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
+        Console.WriteLine(new string(' ', leftPadding) + $"║ {prompt.PadRight(desiredWidth - 4)} ║");
 
-        Console.WriteLine(new string(' ', leftPadding) + $"║ {prompt.PadRight(boxWidth - 4)} ║");
-
-        Console.WriteLine(new string(' ', leftPadding) + "╚" + new string('═', boxWidth - 2) + "╝");
+        Console.WriteLine(new string(' ', leftPadding) + "╚" + new string('═', desiredWidth - 2) + "╝");
 
         Console.ResetColor();
 
