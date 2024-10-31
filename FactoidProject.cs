@@ -60,27 +60,38 @@
         QuestionTypes questionType = GetQuestionType(input);
         string[] sentences = RetrieveData(input);
 
-        int maxSimilarity = 0;
+        double maxSimilarity = 0;
         string bestSentence = "";
+
+        double sumOfSimilarities = 0;
 
         for (int i = 0; i < sentences.Length; i++)
         {
             string sentence = RemoveStopWords(sentences[i]);
-            int similarity = GetSimilarity(input, sentence);
+            double similarity = GetSimilarity(input, sentence);
+
+            sumOfSimilarities += similarity;
 
             string[] answers = GetAnswers(sentence, questionType);
 
             if (similarity > maxSimilarity && answers.Length > 0 && answers[0] != "I'm not sure.")
             {
                 maxSimilarity = similarity;
-                bestSentence = sentence;
+                bestSentence = sentence; 
             }
         }
 
+        double lexicalMatch = Math.Round((maxSimilarity / sumOfSimilarities) * 100, 2);
+
         string[] bestAnswers = GetAnswers(bestSentence, questionType);
+        string bestAnswer = string.Join(" ", bestAnswers); 
+
+        if (bestAnswers.Length == 0 || bestAnswers[0] == "I'm not sure.") bestAnswer = $"I'm not sure but the closest match is: {bestSentence}";
+        if (bestSentence == "") bestAnswer = "I'm not sure.";
 
         ShowBubble("Question: " + input, ConsoleColor.Blue);
-        for (int i = 0; i < bestAnswers.Length; i++) ShowBubble("Answer: " + bestAnswers[i], ConsoleColor.DarkGreen);
+        ShowBubble("Answer: " + bestAnswer, ConsoleColor.DarkGreen);
+        ShowBubble($"Highest Match: {lexicalMatch}%", ConsoleColor.DarkYellow);
     }
 
     private static string[] GetAnswers(string sentence = "", QuestionTypes questionType = QuestionTypes.UNKNOWN)
@@ -159,6 +170,7 @@
 
         for (int i = 0; i < words.Length; i++)
         {
+            if (words[i].ToUpper() == words[i].ToLower()) { continue; }
             if (words[i] == words[i].ToUpper()) { places[placesCount] = words[i]; placesCount++; }
         }
 
@@ -176,8 +188,9 @@
 
         for (int i = 0; i < words.Length; i++)
         {
-            if (words[i].Contains("/") || words[i].Contains("-") ||
-                words[i].Length == 4 && int.TryParse(words[i], out int year) && year > 1000 && year < 3000)
+            if ((words[i].Contains("/") || words[i].Contains("-")) && 
+                int.TryParse(words[i].Split(' ')[0], out int _) ||
+                (words[i].Length == 4 && int.TryParse(words[i], out int year) && year > 1000 && year < 3000))
             {
                 dates[datesCount] = words[i];
                 datesCount++;
@@ -211,12 +224,12 @@
         return result;
     }
 
-    private static int GetSimilarity(string input, string sentence)
+    private static double GetSimilarity(string input, string sentence)
     {
         string[] inputWords = input.Split(' ');
         string[] sentenceWords = sentence.Split(' ');
 
-        int similarity = 0;
+        double similarity = 0;
 
         for (int i = 0; i < inputWords.Length; i++)
         {
@@ -225,6 +238,9 @@
                 if (inputWords[i].ToLower() == sentenceWords[j].ToLower()) similarity++;
             }
         }
+
+        int minimumLength = Math.Min(inputWords.Length, sentenceWords.Length);
+        similarity /= minimumLength;
 
         return similarity;
     }
@@ -280,10 +296,17 @@
     {
         Console.Clear();
         ShowBubble("Program Guide", ConsoleColor.Blue);
-        ShowBubble("This is placeholder text for the guide section.", ConsoleColor.DarkGray);
-        ShowBubble("Additional guide information would be shown here.", ConsoleColor.DarkGray);
-        ShowBubble("Instructions: Follow the prompts", ConsoleColor.DarkGray);
-    }
+        ShowBubble("This program is designed to answer questions based on the data you provide.", ConsoleColor.DarkMagenta);
+        ShowBubble("You can enter a question and the program will analyze the data to find the best answer.", ConsoleColor.DarkMagenta);
+        ShowBubble("You can also enter the data you would like to analyze or leave it blank to use the current data.", ConsoleColor.DarkMagenta);
+        ShowBubble("Special Commands:", ConsoleColor.DarkYellow);
+        ShowBubble(
+            CommandString("exit", "exit the program") + "\n" +
+            CommandString("guide", "show the guide of the program") + "\n" +
+            CommandString("data", "show the data you have entered"),
+            ConsoleColor.DarkYellow
+        );
+   }
 
     private static void ValidateBoxSize(ref int boxWidth)
     {
@@ -310,7 +333,7 @@
         int leftPadding = (consoleWidth - desiredWidth) / 2;
 
         Console.ForegroundColor = color;
-        Console.SetCursorPosition(leftPadding, bubblesCount * 5);
+        Console.SetCursorPosition(leftPadding, (bubblesCount - 1) * 5);
         Console.WriteLine("╔" + new string('═', desiredWidth - 2) + "╗");
 
         int maxTextWidth = desiredWidth - 6;
