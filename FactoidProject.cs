@@ -388,11 +388,11 @@
         Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
 
         Console.WriteLine(new string(' ', leftPadding) + $"║ {studentSection.PadRight(boxWidth - 4)} ║");
-        foreach (string student in students) Console.WriteLine(new string(' ', leftPadding) + $"║ - {student.PadRight(boxWidth - 6)} ║");
+        for (int i = 0; i < students.Length; i++) Console.WriteLine(new string(' ', leftPadding) + $"║ - {students[i].PadRight(boxWidth - 6)} ║");
         Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
 
         Console.WriteLine(new string(' ', leftPadding) + $"║ {commandsSection.PadRight(boxWidth - 4)} ║");
-        foreach (string command in specialCommands) Console.WriteLine(new string(' ', leftPadding) + $"║ {command.PadRight(boxWidth - 4)} ║");
+        for (int i = 0; i < specialCommands.Length; i++) Console.WriteLine(new string(' ', leftPadding) + $"║ {specialCommands[i].PadRight(boxWidth - 4)} ║");
         Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
 
         Console.WriteLine(new string(' ', leftPadding) + $"║ {prompt.PadRight(boxWidth - 4)} ║");
