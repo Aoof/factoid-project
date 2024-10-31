@@ -43,7 +43,6 @@
                 ShowBubble("Terminating Program...", ConsoleColor.DarkRed);
                 break;
             }
-            else if (input == "history") { ShowHistory(); }
             else if (input == "guide") { ShowGuide(); }
             else if (input == "data") { ShowData(); }
             else { ProcessQuestion(input); }
@@ -74,7 +73,7 @@
             if (similarity > maxSimilarity && answers.Length > 0 && answers[0] != "I'm not sure.")
             {
                 maxSimilarity = similarity;
-                bestSentence = sentences[i];
+                bestSentence = sentence;
             }
         }
 
@@ -145,9 +144,6 @@
                 peopleCount++; 
             }
         }
-
-        Console.WriteLine(peopleCount);
-        Console.WriteLine(people[0]);
 
         string[] result = new string[peopleCount];
         for (int i = 0; i < peopleCount; i++) { result[i] = people[i]; }
@@ -280,15 +276,6 @@
 
     }
 
-    private static void ShowHistory()
-    {
-        Console.Clear();
-        ShowBubble("History Information", ConsoleColor.Blue);
-        ShowBubble("This is placeholder text for the history section.", ConsoleColor.DarkGray);
-        ShowBubble("Additional history information would be shown here.", ConsoleColor.DarkGray);
-        ShowBubble("Instructions: Follow the prompts", ConsoleColor.DarkGray);
-    }
-
     private static void ShowGuide()
     {
         Console.Clear();
@@ -357,7 +344,6 @@
         string commandsSection = "Special Commands:";
         string[] specialCommands = {
             CommandString("exit", "exit the program"),
-            CommandString("history", "show the history of your questions and answers"),
             CommandString("guide", "show the guide of the program"),
             CommandString("data", "show the data you have entered")
         };
