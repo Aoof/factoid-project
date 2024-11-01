@@ -1,5 +1,7 @@
 # FactoidProject
 
+![FactoidProject Demonstration](./factoid-project-demo-spedup.gif)
+
 ## Installation
 
 1. **Clone the repository:**
