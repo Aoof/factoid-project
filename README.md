@@ -20,7 +20,11 @@
 
 ## Overview
 
+> **Note:** The pseudocode is only to help us understand the code better and be able to explain it concisely. **The professor follows different pseudocode conventions, so we should not use this pseudocode in the final report.**
+
 FactoidProject is a console application designed to analyze and answer questions based on the data provided by the user. The application processes the input data, identifies the type of question, and attempts to find the best possible answer from the data.
+
+Altered version of pseudocodes to help explain it concisely are provided for the main components of the application, including the main method, question processing, data retrieval, answer extraction, similarity calculation, and user interface components.
 
 ## Main Components
 
@@ -29,245 +33,239 @@ The entry point of the application. It sets up the console, prompts the user for
 ```csharp
 public static void Main(string[] args)
 ```
+**Pseudocode:**
+```
+Set console title and clear console
+Show welcome message
+Prompt user for data
+If data is provided, store it; otherwise, use placeholder data
+Enter main loop:
+    Get user input
+    If input is "exit", break loop
+    If input is "guide", show guide
+    If input is "data", show data
+    Otherwise, process the question
+    Prompt user to continue
+    Reset bubbles
+```
 
 ### 2. ProcessQuestion Method
-Analyzes the user's question, determines the type of question, retrieves relevant data, and calculates the similarity between the question and the data to find the best possible answer.
+Analyzes the user's question, determines the type of question, retrieves relevant data, and calculates the similarity between the question and the data to find the best possible answer. It also displays the question, answer, and similarity percentage in a styled format.
 ```csharp
 private static void ProcessQuestion(string input)
 ```
+**Pseudocode:**
+```
+Determine question type
+Retrieve data sentences
+Initialize variables for max similarity and best sentence
+For each sentence:
+    Remove stop words
+    Calculate similarity with input
+    Sum similarities
+    Get answers based on question type
+    If similarity is highest and answers are valid, update max similarity and best sentence
+Calculate lexical match percentage
+Get best answers from best sentence
+If no valid answers, set default answer
+Show question, answer, and similarity percentage in styled format
+```
 
 ### 3. GetAnswers Method
-Determines the type of answer to extract based on the question type (e.g., person, place, date, number) and retrieves the relevant answers from the given sentence.
+Determines the type of answer to extract based on the question type (e.g., person, place, date, number) and retrieves the relevant answers from the given sentence. It uses helper methods to extract specific types of information.
 ```csharp
 private static string[] GetAnswers(string sentence, QuestionTypes questionType)
 ```
+**Pseudocode:**
+```
+Split sentence into words and trim whitespace
+Join words back into a sentence
+Switch based on question type:
+    If "PERSON", call GetPeople
+    If "PLACE", call GetPlaces
+    If "DATE", call GetDates
+    If "NUMBER", call GetNumbers
+    Otherwise, return default answer
+Return answers
+```
 
 ### 4. RetrieveData Method
-Processes the input data by splitting it into sentences and cleaning up unnecessary characters.
+Processes the input data by splitting it into sentences and cleaning up unnecessary characters. This method ensures that the data is in a suitable format for analysis.
 ```csharp
 private static string[] RetrieveData(string input)
 ```
+**Pseudocode:**
+```
+Replace newlines with spaces in data
+Replace "Inc." with "Inc"
+Split data into sentences based on punctuation
+Trim and clean up each sentence
+Return sentences
+```
 
 ### 5. RemoveStopWords Method
-Removes common stop words from a given string to improve the accuracy of the similarity calculation.
+Removes common stop words from a given string to improve the accuracy of the similarity calculation. This method helps in focusing on the meaningful words in the sentences.
 ```csharp
 private static string RemoveStopWords(string str)
 ```
+**Pseudocode:**
+```
+Define list of stop words
+Split input string into words
+For each word:
+    If word is a stop word, remove it
+Join remaining words into a string
+Return cleaned string
+```
 
 ### 6. GetPeople, GetPlaces, GetDates, GetNumbers Methods
-Each method extracts specific types of information (people, places, dates, numbers) from a given sentence.
+Each method extracts specific types of information (people, places, dates, numbers) from a given sentence. These methods are used by the `GetAnswers` method to find relevant answers based on the question type.
 ```csharp
 private static string[] GetPeople(string sentence)
 private static string[] GetPlaces(string sentence)
 private static string[] GetDates(string sentence)
 private static string[] GetNumbers(string sentence)
 ```
+**Pseudocode for GetPeople:**
+```
+Split sentence into words
+Initialize list for people
+For each word:
+    If word starts with an uppercase letter, add to people list
+Return list of people
+```
+
+**Pseudocode for GetPlaces:**
+```
+Split sentence into words
+Initialize list for places
+For each word:
+    If word is uppercase, add to places list
+Return list of places
+```
+
+**Pseudocode for GetDates:**
+```
+Split sentence into words
+Initialize list for dates
+For each word:
+    If word contains date format or is a valid year, add to dates list
+Return list of dates
+```
+
+**Pseudocode for GetNumbers:**
+```
+Split sentence into words
+Initialize list for numbers
+For each word:
+    If word contains number format, add to numbers list
+Return list of numbers
+```
 
 ### 7. GetSimilarity Method
-Calculates the similarity between the user's question and a given sentence from the data.
+Calculates the similarity between the user's question and a given sentence from the data. This method helps in identifying the most relevant sentence that matches the user's question.
 ```csharp
 private static double GetSimilarity(string input, string sentence)
 ```
+**Pseudocode:**
+```
+Split input and sentence into words
+Initialize similarity counter
+For each word in input:
+    For each word in sentence:
+        If words match, increment similarity counter
+Calculate similarity as ratio of matches to minimum length of input and sentence
+Return similarity
+```
 
 ### 8. GetQuestionType Method
-Identifies the type of question based on specific keywords (e.g., who, where, when, how many, how much).
+Identifies the type of question based on specific keywords (e.g., who, where, when, how many, how much). This method helps in determining the type of answer to extract.
 ```csharp
 private static QuestionTypes GetQuestionType(string input)
 ```
+**Pseudocode:**
+```
+Convert input to lowercase
+Define list of keywords and corresponding question types
+For each keyword:
+    If input contains keyword, return corresponding question type
+Return "UNKNOWN" if no match found
+```
 
 ### 9. ShowData Method
-Displays the current data and allows the user to enter new data.
+Displays the current data and allows the user to enter new data. This method provides an interface for the user to manage the data being analyzed.
 ```csharp
 private static void ShowData()
 ```
+**Pseudocode:**
+```
+Clear console
+Show data information in styled format
+Prompt user to enter new data
+If new data is provided, update data
+```
 
 ### 10. ShowGuide Method
-Displays a guide explaining how to use the application and the special commands available.
+Displays a guide explaining how to use the application and the special commands available. This method helps users understand the functionality and usage of the application.
 ```csharp
 private static void ShowGuide()
 ```
+**Pseudocode:**
+```
+Clear console
+Show program guide in styled format
+Show special commands in styled format
+```
 
 ### 11. ShowBubble Method
-Since this method is using a lot of new code that we did not cover in the course I will provide extreme details on how it works. But TLDR, it displays messages in a styled "bubble" format on the console.
-[Detailed Explanation of `ShowBubble` Method](#detailed-explanation-of-getinput-and-showbubble-methods)
+Displays messages in a styled "bubble" format on the console. This method enhances the user interface by presenting information in a visually appealing way.
 ```csharp
 private static void ShowBubble(string text, ConsoleColor color = ConsoleColor.DarkGreen)
 ```
+**Pseudocode:**
+```
+Store message in bubbles array
+Calculate box dimensions based on console width
+Set console color
+Draw top border of bubble
+Split text into lines
+For each line:
+    Draw line within bubble
+Draw bottom border of bubble
+Reset console color
+```
 
 ### 12. CommandString Method
-Formats command descriptions for display in the guide and input prompt.
+Formats command descriptions for display in the guide and input prompt. This method helps in presenting the commands in a consistent and readable format.
 ```csharp
 private static string CommandString(string command, string description)
 ```
+**Pseudocode:**
+```
+Format command and description into a single string
+Return formatted string
+```
 
 ### 13. GetInput Method
-Since this method is using a lot of new code that we did not cover in the course I will provide extreme details on how it works. But TLDR, it displays the main input prompt to the user, including the title, student names, special commands, and captures the user's input. [Detailed Explanation of `GetInput` Method](#detailed-explanation-of-getinput-and-showbubble-methods)
+Displays the main input prompt to the user, including the title, student names, special commands, and captures the user's input. This method provides an interface for the user to interact with the application.
 ```csharp
 private static string GetInput(string prompt = "Enter your question: ")
 ```
-
-
-
-## Detailed Explanation of `GetInput` and `ShowBubble` Methods
-
-### `GetInput` Method
-
-The `GetInput` method is responsible for displaying the main input prompt to the user, including the title, student names, special commands, and capturing the user's input.
-
-#### Code
-[View `GetInput` method in `FactoidProject.cs`](FactoidProject.cs#L361)
-
-#### Explanation
-
-1. **Clear Console:**
-   ```csharp
-   Console.Clear();
-   ```
-
-2. **Define Sections and Commands:**
-   - Title: "Factoid Project"
-   - Student Section: "Student Names:"
-   - Commands Section: "Special Commands:"
-   - Special Commands: `exit`, `guide`, `data`
-   ```csharp
-   string title = "Factoid Project";
-   string studentSection = "Student Names:";
-   string commandsSection = "Special Commands:";
-   string[] specialCommands = {
-      CommandString("exit", "exit the program"),
-      CommandString("guide", "show the guide of the program"),
-      CommandString("data", "show the data you have entered")
-   };
-   ```
-
-3. **Set Console Color:**
-   ```csharp
-   Console.ForegroundColor = ConsoleColor.Cyan;
-   ```
-
-4. **Calculate Box Width:**
-   ```csharp
-   int consoleWidth = Console.WindowWidth;
-   int writingAreaWidth = 60;
-   int boxWidth = Math.Max(title.Length, prompt.Length + writingAreaWidth) + 6;
-   if (boxWidth > consoleWidth) boxWidth = consoleWidth - 2;
-   ```
-
-5. **Calculate Padding:**
-   ```csharp
-   int leftPadding = (consoleWidth - boxWidth) / 2;
-   int titlePadding = (boxWidth - 2 - title.Length) / 2;
-   ```
-
-6. **Draw Box:**
-   - Top Border
-   - Title
-   - Sections (Student Names, Special Commands)
-   - Prompt
-   ```csharp
-   Console.WriteLine(new string(' ', leftPadding) + "╔" + new string('═', boxWidth - 2) + "╗");
-   Console.WriteLine(new string(' ', leftPadding) + "║" + new string(' ', titlePadding) + title + new string(' ', boxWidth - 2 - titlePadding - title.Length) + "║");
-   Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
-
-   Console.WriteLine(new string(' ', leftPadding) + $"║ {studentSection.PadRight(boxWidth - 4)} ║");
-   for (int i = 0; i < students.Length; i++) Console.WriteLine(new string(' ', leftPadding) + $"║ - {students[i].PadRight(boxWidth - 6)} ║");
-   Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
-
-   Console.WriteLine(new string(' ', leftPadding) + $"║ {commandsSection.PadRight(boxWidth - 4)} ║");
-   for (int i = 0; i < specialCommands.Length; i++) Console.WriteLine(new string(' ', leftPadding) + $"║ {specialCommands[i].PadRight(boxWidth - 4)} ║");
-   Console.WriteLine(new string(' ', leftPadding) + "╠" + new string('═', boxWidth - 2) + "╣");
-
-   Console.WriteLine(new string(' ', leftPadding) + $"║ {prompt.PadRight(boxWidth - 4)} ║");
-
-   Console.WriteLine(new string(' ', leftPadding) + "╚" + new string('═', boxWidth - 2) + "╝");
-   ```
-
-7. **Reset Console Color:**
-   ```csharp
-   Console.ResetColor();
-   ```
-
-8. **Set Cursor Position and Read Input:**
-   ```csharp
-   Console.SetCursorPosition(leftPadding + 2 + prompt.Length, Console.CursorTop - 2);
-   string? input = Console.ReadLine();
-   ```
-
-9. **Return Input:**
-   ```csharp
-   if (input == null) return "";
-   return input;
-   ```
-
-### `ShowBubble` Method
-
-The `ShowBubble` method is responsible for displaying messages in a styled "bubble" format on the console.
-
-#### Code
-[View `ShowBubble` method in `FactoidProject.cs`](FactoidProject.cs#L317)
-
-#### Explanation
-
-1. **Store Message in Bubbles Array:**
-   ```csharp
-   for (int i = 0; i < bubbles.Length; i++)
-   {
-      if (bubbles[i] == null)
-      {
-         bubbles[i] = text;
-         bubblesCount++;
-         break;
-      }
-   }
-   ```
-
-2. **Calculate Box Dimensions:**
-   ```csharp
-   int consoleWidth = Console.WindowWidth;
-   int maxBoxWidth = consoleWidth / 2 + 20;
-   int desiredWidth = Math.Min(text.Length + 6, maxBoxWidth);
-   if (desiredWidth > consoleWidth) desiredWidth = consoleWidth - 2;
-   int leftPadding = (consoleWidth - desiredWidth) / 2;
-   ```
-
-3. **Set Console Color:**
-   ```csharp
-   Console.ForegroundColor = color;
-   ```
-
-4. **Draw Top Border:**
-   ```csharp
-   Console.SetCursorPosition(leftPadding, (bubblesCount - 1) * 5);
-   Console.WriteLine("╔" + new string('═', desiredWidth - 2) + "╗");
-   ```
-
-5. **Draw Text Lines:**
-   ```csharp
-   int maxTextWidth = desiredWidth - 6;
-   string[] lines = text.Split('\n');
-   foreach (string textLine in lines)
-   {
-      for (int i = 0; i < textLine.Length; i += maxTextWidth)
-      {
-         string line = textLine.Substring(i, Math.Min(maxTextWidth, textLine.Length - i));
-         Console.SetCursorPosition(leftPadding, Console.CursorTop);
-         Console.WriteLine("║" + new string(' ', 2) + line.PadRight(maxTextWidth) + new string(' ', 2) + "║");
-      }
-   }
-   ```
-
-6. **Draw Bottom Border:**
-   ```csharp
-   Console.SetCursorPosition(leftPadding, Console.CursorTop);
-   Console.WriteLine("╚" + new string('═', desiredWidth - 2) + "╝");
-   ```
-
-7. **Reset Cursor Position and Color:**
-   ```csharp
-   Console.SetCursorPosition(0, Console.CursorTop + 1);
-   Console.ResetColor();
-   ```
-
+**Pseudocode:**
+```
+Clear console
+Define sections and commands
+Set console color
+Calculate box dimensions based on console width
+Draw top border of input box
+Draw title, student names, and special commands within box
+Draw prompt within box
+Draw bottom border of input box
+Reset console color
+Set cursor position for input
+Read user input
+Return user input
+```
 
 ## Special Commands
 
@@ -277,29 +275,32 @@ The `ShowBubble` method is responsible for displaying messages in a styled "bubb
 
 ## Example Usage
 
-1. **Run the application:**
-   ```sh
-   dotnet run
+1. **Enter Data:**
+   ```
+   Enter your data:
+   The history of programming languages spans from documentation of early mechanical computers to modern tools for software development. Early programming languages were highly specialized, relying on mathematical notation and similarly obscure syntax. Throughout the 20th century, research in compiler theory led to the creation of high-level programming languages, which use a more accessible syntax to communicate instructions. The first high-level programming language was created by Konrad Zuse in 1943. The first high-level language to have an associated compiler was created by Corrado Böhm in 1951. Konrad Zuse was born on 1910/06/22, in GERMANY, and was a notable civil engineer, pioneering computer scientist, inventor, and businessman.
    ```
 
-2. **Enter the data you would like to analyze:**
+2. **Ask Questions:**
    ```
-   Please enter the data you would like to analyze: 
-   ```
-
-3. **Ask a question:**
-   ```
-   Enter your question: Who is the CEO of the company?
+   Enter your question: Who created the first high-level programming language?
    ```
 
-4. **View the answer and continue:**
+3. **View Answer:**
    ```
-   Press any key to continue...
-   ```
-
-5. **Use special commands as needed:**
-   ```
-   Enter your question: guide
+   Konrad Zuse 
    ```
 
-Enjoy using FactoidProject to analyze and answer questions based on your data!
+4. **Ask More Questions:**
+   ```
+   Enter your question: When was Konrad Zuse born?
+   ```
+
+5. **View Answer:**
+   ```
+   1910/06/22
+   ```
+
+
+## Conclusion
+This is a small study project that demonstrates the implementation of a factoid question-answering system using C#. The application processes user questions, retrieves relevant data, calculates similarity, and extracts answers based on the question type. The pseudocode provides a high-level overview of the main components and methods used in the application. The user interface components enhance the user experience by presenting information in a visually appealing and structured format. The special commands allow users to manage data, view guides, and exit the program easily. Overall, the application showcases the basic functionality of a factoid question-answering system and serves as a foundation for further development and enhancements.
