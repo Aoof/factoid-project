@@ -76,7 +76,7 @@ Show question, answer, and similarity percentage in styled format
 ### 3. GetAnswers Method
 Determines the type of answer to extract based on the question type (e.g., person, place, date, number) and retrieves the relevant answers from the given sentence. It uses helper methods to extract specific types of information.
 ```csharp
-string[] GetAnswers(string sentence, QuestionTypes questionType)
+string[] GetAnswers(string sentence, string questionType)
 ```
 **Pseudocode:**
 ```
@@ -183,7 +183,7 @@ Return similarity
 ### 8. GetQuestionType Method
 Identifies the type of question based on specific keywords (e.g., who, where, when, how many, how much). This method helps in determining the type of answer to extract.
 ```csharp
-QuestionTypes GetQuestionType(string input)
+string GetQuestionType(string input)
 ```
 **Pseudocode:**
 ```
