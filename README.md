@@ -33,7 +33,7 @@ Altered version of pseudocodes to help explain it concisely are provided for the
 ### 1. Main Method
 The entry point of the application. It sets up the console, prompts the user for data, and enters a loop to process user questions until the user decides to exit.
 ```csharp
-public static void Main(string[] args)
+void Main(string[] args)
 ```
 **Pseudocode:**
 ```
@@ -54,7 +54,7 @@ Enter main loop:
 ### 2. ProcessQuestion Method
 Analyzes the user's question, determines the type of question, retrieves relevant data, and calculates the similarity between the question and the data to find the best possible answer. It also displays the question, answer, and similarity percentage in a styled format.
 ```csharp
-private static void ProcessQuestion(string input)
+void ProcessQuestion(string input)
 ```
 **Pseudocode:**
 ```
@@ -76,7 +76,7 @@ Show question, answer, and similarity percentage in styled format
 ### 3. GetAnswers Method
 Determines the type of answer to extract based on the question type (e.g., person, place, date, number) and retrieves the relevant answers from the given sentence. It uses helper methods to extract specific types of information.
 ```csharp
-private static string[] GetAnswers(string sentence, QuestionTypes questionType)
+string[] GetAnswers(string sentence, QuestionTypes questionType)
 ```
 **Pseudocode:**
 ```
@@ -94,7 +94,7 @@ Return answers
 ### 4. RetrieveData Method
 Processes the input data by splitting it into sentences and cleaning up unnecessary characters. This method ensures that the data is in a suitable format for analysis.
 ```csharp
-private static string[] RetrieveData(string input)
+string[] RetrieveData(string input)
 ```
 **Pseudocode:**
 ```
@@ -108,7 +108,7 @@ Return sentences
 ### 5. RemoveStopWords Method
 Removes common stop words from a given string to improve the accuracy of the similarity calculation. This method helps in focusing on the meaningful words in the sentences.
 ```csharp
-private static string RemoveStopWords(string str)
+string RemoveStopWords(string str)
 ```
 **Pseudocode:**
 ```
@@ -123,10 +123,10 @@ Return cleaned string
 ### 6. GetPeople, GetPlaces, GetDates, GetNumbers Methods
 Each method extracts specific types of information (people, places, dates, numbers) from a given sentence. These methods are used by the `GetAnswers` method to find relevant answers based on the question type.
 ```csharp
-private static string[] GetPeople(string sentence)
-private static string[] GetPlaces(string sentence)
-private static string[] GetDates(string sentence)
-private static string[] GetNumbers(string sentence)
+string[] GetPeople(string sentence)
+string[] GetPlaces(string sentence)
+string[] GetDates(string sentence)
+string[] GetNumbers(string sentence)
 ```
 **Pseudocode for GetPeople:**
 ```
@@ -167,7 +167,7 @@ Return list of numbers
 ### 7. GetSimilarity Method
 Calculates the similarity between the user's question and a given sentence from the data. This method helps in identifying the most relevant sentence that matches the user's question.
 ```csharp
-private static double GetSimilarity(string input, string sentence)
+double GetSimilarity(string input, string sentence)
 ```
 **Pseudocode:**
 ```
@@ -183,7 +183,7 @@ Return similarity
 ### 8. GetQuestionType Method
 Identifies the type of question based on specific keywords (e.g., who, where, when, how many, how much). This method helps in determining the type of answer to extract.
 ```csharp
-private static QuestionTypes GetQuestionType(string input)
+QuestionTypes GetQuestionType(string input)
 ```
 **Pseudocode:**
 ```
@@ -197,7 +197,7 @@ Return "UNKNOWN" if no match found
 ### 9. ShowData Method
 Displays the current data and allows the user to enter new data. This method provides an interface for the user to manage the data being analyzed.
 ```csharp
-private static void ShowData()
+void ShowData()
 ```
 **Pseudocode:**
 ```
@@ -210,7 +210,7 @@ If new data is provided, update data
 ### 10. ShowGuide Method
 Displays a guide explaining how to use the application and the special commands available. This method helps users understand the functionality and usage of the application.
 ```csharp
-private static void ShowGuide()
+void ShowGuide()
 ```
 **Pseudocode:**
 ```
@@ -222,7 +222,7 @@ Show special commands in styled format
 ### 11. ShowBubble Method
 Displays messages in a styled "bubble" format on the console. This method enhances the user interface by presenting information in a visually appealing way.
 ```csharp
-private static void ShowBubble(string text, ConsoleColor color = ConsoleColor.DarkGreen)
+void ShowBubble(string text, ConsoleColor color = ConsoleColor.DarkGreen)
 ```
 **Pseudocode:**
 ```
@@ -240,7 +240,7 @@ Reset console color
 ### 12. CommandString Method
 Formats command descriptions for display in the guide and input prompt. This method helps in presenting the commands in a consistent and readable format.
 ```csharp
-private static string CommandString(string command, string description)
+string CommandString(string command, string description)
 ```
 **Pseudocode:**
 ```
@@ -251,7 +251,7 @@ Return formatted string
 ### 13. GetInput Method
 Displays the main input prompt to the user, including the title, student names, special commands, and captures the user's input. This method provides an interface for the user to interact with the application.
 ```csharp
-private static string GetInput(string prompt = "Enter your question: ")
+string GetInput(string prompt = "Enter your question: ")
 ```
 **Pseudocode:**
 ```
