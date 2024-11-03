@@ -68,7 +68,7 @@ void ProcessQuestion(string input)
 
         string[] answers = GetAnswers(sentence, questionType);
 
-        if (similarity > maxSimilarity && answers.Length > 0 && answers[0] != "I'm not sure.")
+        if (similarity >= maxSimilarity && answers.Length > 0 && answers[0] != "I'm not sure.")
         {
             maxSimilarity = similarity;
             bestSentence = sentence; 
@@ -190,7 +190,7 @@ string[] GetDates(string sentence)
     for (int i = 0; i < words.Length; i++)
     {
         if ((words[i].Contains("/") || words[i].Contains("-")) && 
-            int.TryParse(words[i].Split(' ')[0], out int _) ||
+            int.TryParse(words[i].Replace('/', '-').Replace(' ', '-').Split('-')[0], out int _) ||
             (words[i].Length == 4 && int.TryParse(words[i], out int year) && year > 1000 && year < 3000))
         {
             dates[datesCount] = words[i];
