@@ -6,8 +6,8 @@
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/Aoof/FactoidProject.git
-   cd FactoidProject
+   git clone https://github.com/Aoof/factoid-project.git
+   cd factoid-project
    ```
 
 2. **Build the project:**
