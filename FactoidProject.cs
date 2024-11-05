@@ -238,7 +238,7 @@ while (true)
 void ProcessQuestion(string input)
 {
     string questionType = GetQuestionType(input);
-    string[] sentences = RetrieveData(input);
+    string[] sentences = RetrieveData();
 
     double maxSimilarity = 0;
     string bestSentence = "";
@@ -297,7 +297,7 @@ string[] GetAnswers(string sentence = "", string questionType = "UNKNOWN")
 // DATA RETRIEVAL MODULE
 
 // Retrieve data and split into sentences
-string[] RetrieveData(string input)
+string[] RetrieveData()
 {
     data = Replace(data, '\n', ' ');
     data = Replace(data, "Inc.", "Inc");

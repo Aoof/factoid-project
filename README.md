@@ -28,6 +28,24 @@ FactoidProject is a console application designed to analyze and answer questions
 
 Altered version of pseudocodes to help explain it concisely are provided for the main components of the application, including the main method, question processing, data retrieval, answer extraction, similarity calculation, and user interface components.
 
+## Guide for collaborators
+
+1. **Open your folder:**
+    - Navigate to the folder named after you.
+
+2. **View and edit your `.cs` file:**
+    - Locate and open the `.cs` file within your folder to make any necessary edits.
+
+3. **Run your project to test it:**
+    - To run the entire project, use:
+      ```sh
+      dotnet run
+      ```
+    - To run the project in your specific folder, use:
+      ```sh
+      dotnet run --project YourName
+      ```
+
 ## Main Components
 
 ### 1. Main Method
