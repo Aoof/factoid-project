@@ -10,7 +10,7 @@ string data = "The history of programming languages spans from documentation of 
 string RemoveStopWords(string str)
 {
     // Implement your solution here using the `data` variable above
-    return new string[] { }; // You will need to change this line to return the actual result
+    return ""; // You will need to change this line to return the actual result
 }
 
 // 2. GetDates
