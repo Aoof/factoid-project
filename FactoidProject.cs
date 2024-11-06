@@ -200,7 +200,6 @@ int bubblesCount = 0;
 
 // Data to be analyzed
 string data = "";
-
 // Set console title and clear console
 Console.Title = "Factoid Project";
 Console.Clear();
