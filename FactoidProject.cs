@@ -188,10 +188,10 @@ string Contains(string str, string substr)
 
 // List of students
 string[] students = {
-    "Rahman",
-    "Sofia",
-    "Akshay",
-    "Abtin",
+    "Abdulrahman Mousa",
+    "Sofia Saldumbide Rissotto",
+    "Akshay Kheterpal",
+    "Abtin Ataei Ashtiani",
 };
 
 // Array to store bubbles for UI
