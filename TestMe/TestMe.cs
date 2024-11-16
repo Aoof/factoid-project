@@ -2,6 +2,7 @@
 {
     static string[] DATA = {
         "The history of programming languages spans from documentation of early mechanical computers to modern tools for software development. Early programming languages were highly specialized, relying on mathematical notation and similarly obscure syntax. Throughout the 20th century, research in compiler theory led to the creation of high-level programming languages, which use a more accessible syntax to communicate instructions. The first high-level programming language was created by Konrad Zuse in 1943. The first high-level language to have an associated compiler was created by Corrado Böhm in 1951. Konrad Zuse was born on 1910/06/22, in GERMANY, and was a notable civil engineer, pioneering computer scientist, inventor, and businessman.",
+        "Apple Inc. was founded by Steve Jobs and Steve Wozniak in CUPERTINO, CALIFORNIA, on 1976-04-01. The company initially raised $1,000 to develop their first product. In 2023, Apple reported a 15% revenue increase, reaching a total of $387.53 billion."
     };
 
     public static void Main(string[] args)
@@ -29,6 +30,22 @@
                 TestSofia();
                 break;
             default:
+                for (int i = 0; i < DATA.Length; i++)
+                {
+                    Console.WriteLine("Data " + (i + 1) + ": " + DATA[i]);
+                    Console.WriteLine("Sentences:");
+                    string[] sentences = Split(DATA[i], new char[] { '.', '?', '!' });
+                    for (int j = 0; j < sentences.Length; j++)
+                    {
+                        Console.WriteLine("Sentence " + (j + 1) + ": " + sentences[j]);
+                        Console.WriteLine("People: " + Join(GetPeople(sentences[j]), ", "));
+                        Console.WriteLine("Places: " + Join(GetPlaces(sentences[j]), ", "));
+                        Console.WriteLine("Dates: " + Join(GetDates(sentences[j]), ", "));
+                        Console.WriteLine("Numbers: " + Join(GetNumbers(sentences[j]), ", "));
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine();
+                }
                 Console.WriteLine("User not found.");
                 break;
         }

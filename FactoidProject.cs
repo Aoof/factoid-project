@@ -1,6 +1,52 @@
 ﻿// Factoid Project
+// List of students
+string[] students = {
+    "Abdulrahman Mousa",
+    "Sofia Saldumbide Rissotto",
+    "Akshay Kheterpal",
+    "Abtin Ataei Ashtiani",
+};
 
-string[] Split(string str, object separator)
+// Array to store bubbles for UI
+string[] bubbles = new string[10];
+int bubblesCount = 0;
+
+// Data to be analyzed
+string data = "";
+// Set console title and clear console
+Console.Title = "Factoid Project";
+Console.Clear();
+
+// Show welcome message and obtain data if available
+ShowBubble("Welcome to the Factoid Project! Loading Project...", ConsoleColor.Blue);
+Console.WriteLine("Please enter the data you would like to analyze: ");
+string? enteredData = Console.ReadLine(); 
+if (enteredData != null && enteredData != "") data = enteredData;
+else { data = "This is placeholder data for the project."; }
+// System.Threading.Thread.Sleep(2000); // looks like the program is doing something
+
+// Main loop to process user input
+while (true)
+{
+    string input = GetInput();
+
+    if (input == "exit" || input == "" || input == "q" || input == "quit") // || are or statement replacement and && is "and" statement replacement
+    {
+        ShowBubble("Terminating Program...", ConsoleColor.DarkRed);
+        break;
+    }
+    else if (input == "guide") { ShowGuide(); }
+    else if (input == "data") { ShowData(); }
+    else { ProcessQuestion(input); }
+
+    Console.WriteLine("Press any key to continue...");
+    Console.ReadKey();
+
+    bubbles = new string[10];
+    bubblesCount = 0;
+}
+
+string[] Split(string str, object separator) 
 {
     int size = 0;
     if (separator is char) size = 1;
@@ -86,6 +132,13 @@ string ToUpper(string str)
     return result;
 }
 
+bool IsUpper(object word)
+{ 
+    if (word is char) return (char)word >= 'A' && (char)word <= 'Z';
+    else if (word is string) return ToUpper((string)word) == (string)word; 
+    return false;
+}
+
 string Replace(string str, object _old, object _new)
 {
     string old = "";
@@ -163,13 +216,14 @@ string Trim(string str)
     return result;
 }
 
-string Contains(string str, string substr)
+bool Contains(string str, string substr)
 {
+    bool match = false;
     for (int i = 0; i < str.Length; i++)
     {
         if (str[i] == substr[0])
         {
-            bool match = true;
+            match = true;
             for (int j = 1; j < substr.Length; j++)
             {
                 if (i + j >= str.Length || str[i + j] != substr[j])
@@ -179,58 +233,11 @@ string Contains(string str, string substr)
                 }
             }
 
-            if (match) return substr;
+            return match;
         }
     }
 
-    return "";
-}
-
-// List of students
-string[] students = {
-    "Abdulrahman Mousa",
-    "Sofia Saldumbide Rissotto",
-    "Akshay Kheterpal",
-    "Abtin Ataei Ashtiani",
-};
-
-// Array to store bubbles for UI
-string[] bubbles = new string[10];
-int bubblesCount = 0;
-
-// Data to be analyzed
-string data = "";
-// Set console title and clear console
-Console.Title = "Factoid Project";
-Console.Clear();
-
-// Show welcome message and obtain data if available
-ShowBubble("Welcome to the Factoid Project! Loading Project...", ConsoleColor.Blue);
-Console.WriteLine("Please enter the data you would like to analyze: ");
-string? enteredData = Console.ReadLine(); 
-if (enteredData != null && enteredData != "") data = enteredData;
-else { data = "This is placeholder data for the project."; }
-// System.Threading.Thread.Sleep(2000); // looks like the program is doing something
-
-// Main loop to process user input
-while (true)
-{
-    string input = GetInput();
-
-    if (input == "exit" || input == "" || input == "q" || input == "quit")
-    {
-        ShowBubble("Terminating Program...", ConsoleColor.DarkRed);
-        break;
-    }
-    else if (input == "guide") { ShowGuide(); }
-    else if (input == "data") { ShowData(); }
-    else { ProcessQuestion(input); }
-
-    Console.WriteLine("Press any key to continue...");
-    Console.ReadKey();
-
-    bubbles = new string[10];
-    bubblesCount = 0;
+    return match;
 }
 
 // Process the user's question
@@ -333,7 +340,7 @@ string[] GetPeople(string sentence)
 
     for (int i = 0; i < words.Length; i++)
     {
-        if (words[i].Length > 0 && char.IsUpper(words[i][0])) 
+        if (words[i].Length > 0 && IsUpper(words[i][0])) 
         { 
             people[peopleCount] = words[i]; 
             peopleCount++; 
@@ -378,7 +385,7 @@ string[] GetDates(string sentence)
         word = Replace(word, ' ', '-');
         string[] parts = Split(word, '-');
 
-        if ((Contains(words[i], "/") != "" || Contains(words[i], "-") != "") && 
+        if ((Contains(words[i], "/") || Contains(words[i], "-")) && 
             int.TryParse(parts[0], out int _) ||
             (words[i].Length == 4 && int.TryParse(words[i], out int year) && year > 1000 && year < 3000))
         {
@@ -402,7 +409,7 @@ string[] GetNumbers(string sentence)
 
     for (int i = 0; i < words.Length; i++)
     {
-        if (Contains(words[i], "$") != "" || Contains(words[i], "%") != "" || Double.TryParse(words[i], out double number))
+        if (Contains(words[i], "$") || Contains(words[i], "%") || Double.TryParse(words[i], out double number))
         {
             numbers[numbersCount] = words[i];
             numbersCount++;
@@ -453,10 +460,10 @@ string GetQuestionType(string input)
 
     for (int i = 0; i < keywords.GetLength(0); i++)
     {
-        if (Contains(inputLower, keywords[i, 0]) != "")
+        if (Contains(inputLower, keywords[i, 0]))
         { return ToUpper(keywords[i, 1]); }
     }
-    return "UNKNOWN" ;
+    return "UNKNOWN";
 }
 
 // MENUS AND UI MODULE
