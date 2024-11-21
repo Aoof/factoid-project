@@ -313,10 +313,11 @@ string[] RetrieveData()
 }
 
 // Remove common stop words from a string to improve accuracy
-string RemoveStopWords(string str)
+string RemoveStopWords(string sentence)
 {
     string[] stopwords = { "the", "and", "a", "to", "of", "in", "i", "is", "that", "it", "on", "you", "this" }; 
-    string[] words = Split(str, ' ');
+
+    string[] words = Split(sentence, ' ');
     string result = "";
 
     for (int i = 0; i < words.Length; i++)
@@ -363,7 +364,7 @@ string[] GetPlaces(string sentence)
     for (int i = 0; i < words.Length; i++)
     {
         if (ToUpper(words[i]) == ToLower(words[i])) { continue; }
-        if (words[i] == ToUpper(words[i])) { places[placesCount] = words[i]; placesCount++; }
+        if (IsUpper(words[i])) { places[placesCount] = words[i]; placesCount++; }
     }
 
     string[] result = new string[placesCount];
@@ -375,19 +376,23 @@ string[] GetPlaces(string sentence)
 // Extract dates from a sentence
 string[] GetDates(string sentence)
 {
-    string[] words = Split(sentence, ' ');
-    string[] dates = new string[words.Length];
+    string[] words = Split(sentence, ' '); // 4 word sentence with 1 date
+    string[] dates = new string[words.Length]; // -> ["", "", "", ""]
     int datesCount = 0;
 
     for (int i = 0; i < words.Length; i++)
     {
         string word = Replace(words[i], '/', '-');
-        word = Replace(word, ' ', '-');
         string[] parts = Split(word, '-');
 
-        if ((Contains(words[i], "/") || Contains(words[i], "-")) && 
-            int.TryParse(parts[0], out int _) ||
-            (words[i].Length == 4 && int.TryParse(words[i], out int year) && year > 1000 && year < 3000))
+        // For the line `int.TryParse(parts[0], out int _)` we get it from https://learn.microsoft.com/en-us/dotnet/api/system.int32.tryparse?view=net-8.0#system-int32-tryparse(system-string-system-int32@)
+        int year, _;
+
+        // This implementation doesn't account for dates before 1000 or after 3000 or the ones that include BC or AD in them
+        // Also doesn't account for dates that are in word format like "June 22nd"
+
+        if (Contains(words[i], "-") && int.TryParse(parts[0], out _) ||
+            (words[i].Length == 4 && int.TryParse(words[i], out year) && year > 1000 && year < 3000))
         {
             dates[datesCount] = words[i];
             datesCount++;
