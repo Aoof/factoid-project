@@ -1,5 +1,6 @@
 ﻿// Factoid Project
 // List of students
+
 string[] students = {
     "Abdulrahman Mousa",
     "Sofia Saldumbide Rissotto",
@@ -18,12 +19,10 @@ Console.Title = "Factoid Project";
 Console.Clear();
 
 // Show welcome message and obtain data if available
-ShowBubble("Welcome to the Factoid Project! Loading Project...", ConsoleColor.Blue);
 Console.WriteLine("Please enter the data you would like to analyze: ");
 string? enteredData = Console.ReadLine(); 
 if (enteredData != null && enteredData != "") data = enteredData;
 else { data = "This is placeholder data for the project."; }
-// System.Threading.Thread.Sleep(2000); // looks like the program is doing something
 
 // Main loop to process user input
 while (true)
@@ -240,6 +239,7 @@ bool Contains(string str, string substr)
     return match;
 }
 
+// Rahman function
 // Process the user's question
 void ProcessQuestion(string input)
 {
@@ -267,7 +267,7 @@ void ProcessQuestion(string input)
         }
     }
 
-    double lexicalMatch = Math.Round((maxSimilarity / sumOfSimilarities) * 100, 2);
+    double lexicalMatch = Math.Round(maxSimilarity / sumOfSimilarities * 100, 2);
 
     string[] bestAnswers = GetAnswers(bestSentence, questionType);
     string bestAnswer = Join(bestAnswers, " "); 
@@ -280,6 +280,7 @@ void ProcessQuestion(string input)
     ShowBubble($"Highest Match: {lexicalMatch}%", ConsoleColor.DarkYellow);
 }
 
+// Sofia function
 // Get answers based on the question type
 string[] GetAnswers(string sentence = "", string questionType = "UNKNOWN")
 {
@@ -302,6 +303,7 @@ string[] GetAnswers(string sentence = "", string questionType = "UNKNOWN")
 
 // DATA RETRIEVAL MODULE
 
+// Abtin function
 // Retrieve data and split into sentences
 string[] RetrieveData()
 {
@@ -312,6 +314,7 @@ string[] RetrieveData()
     return sentences;
 }
 
+// Akshay function
 // Remove common stop words from a string to improve accuracy
 string RemoveStopWords(string sentence)
 {
@@ -332,6 +335,7 @@ string RemoveStopWords(string sentence)
     return result;
 }
 
+// Abtin function
 // Extract people names from a sentence
 string[] GetPeople(string sentence)
 {
@@ -354,6 +358,7 @@ string[] GetPeople(string sentence)
     return result;
 }
 
+// Abtin function
 // Extract place names from a sentence
 string[] GetPlaces(string sentence)
 {
@@ -373,6 +378,7 @@ string[] GetPlaces(string sentence)
     return result;
 }
 
+// Akshay function
 // Extract dates from a sentence
 string[] GetDates(string sentence)
 {
@@ -405,6 +411,7 @@ string[] GetDates(string sentence)
     return result;
 }
 
+// Akshay function
 // Extract numbers from a sentence
 string[] GetNumbers(string sentence)
 {
@@ -427,6 +434,7 @@ string[] GetNumbers(string sentence)
     return result;
 }
 
+// Sofia function
 // Calculate similarity between input and sentence
 double GetSimilarity(string input, string sentence)
 {
@@ -451,6 +459,7 @@ double GetSimilarity(string input, string sentence)
 
 // QUESTION ANALYSIS MODULE
 
+// Sofia function
 // Determine the type of question based on keywords
 string GetQuestionType(string input)
 {
@@ -473,6 +482,7 @@ string GetQuestionType(string input)
 
 // MENUS AND UI MODULE
 
+// Rahman function
 // Show the current data and allow the user to enter new data
 void ShowData()
 {
@@ -488,6 +498,7 @@ void ShowData()
 
 }
 
+// Rahman function
 // Show the guide for using the program
 void ShowGuide()
 {
@@ -548,9 +559,11 @@ void ShowBubble(string text, ConsoleColor color = ConsoleColor.DarkGreen)
     Console.ResetColor();
 }
 
+// Rahman function
 // Format command descriptions for display
 string CommandString(string command, string description) { return $"- {command.PadRight(10)} -- {description}"; }
 
+// Rahman function
 // Display the main input prompt and capture user input
 string GetInput(string prompt = "Enter your question: ")
 {
