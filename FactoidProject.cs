@@ -410,7 +410,6 @@ string[] GetDates(string sentence)
 
     return result;
 }
-
 // Akshay function
 // Extract numbers from a sentence
 string[] GetNumbers(string sentence)
@@ -419,9 +418,22 @@ string[] GetNumbers(string sentence)
     string[] numbers = new string[words.Length];
     int numbersCount = 0;
 
+    // Get dates to exclude them from numbers
+    string[] dates = GetDates(sentence);
+
     for (int i = 0; i < words.Length; i++)
     {
-        if (Contains(words[i], "$") || Contains(words[i], "%") || Double.TryParse(words[i], out double number))
+        bool isDate = false;
+        foreach (string date in dates)
+        {
+            if (words[i] == date)
+            {
+                isDate = true;
+                break;
+            }
+        }
+
+        if (!isDate && (Contains(words[i], "$") || Contains(words[i], "%") || Double.TryParse(words[i], out double number)))
         {
             numbers[numbersCount] = words[i];
             numbersCount++;
