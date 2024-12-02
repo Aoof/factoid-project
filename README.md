@@ -2,7 +2,14 @@
 
 ![FactoidProject Demonstration](./factoid-project-demo-spedup.gif)
 
+## Binary Release
+
+- Download the binary release from the [releases page](https://github.com/Aoof/factoid-project/releases/latest).
+
 ## Installation
+
+1. **Install the .NET SDK:**
+   - Download and install the [.NET SDK](https://dotnet.microsoft.com/download) for your platform.
 
 1. **Clone the repository:**
    ```sh
@@ -22,31 +29,13 @@
 
 ## Overview
 
-> **Note:** The pseudocode is only to help us understand the code better and be able to explain it concisely. **The professor follows different pseudocode conventions, so we should not use this pseudocode in the final report.**
-
 FactoidProject is a console application designed to analyze and answer questions based on the data provided by the user. The application processes the input data, identifies the type of question, and attempts to find the best possible answer from the data.
 
-Altered version of pseudocodes to help explain it concisely are provided for the main components of the application, including the main method, question processing, data retrieval, answer extraction, similarity calculation, and user interface components.
-
-## Guide for collaborators
-
-1. **Open your folder:**
-    - Navigate to the folder named after you.
-
-2. **View and edit your `.cs` file:**
-    - Locate and open the `.cs` file within your folder to make any necessary edits.
-
-3. **Run your project to test it:**
-    - To run the entire project, use:
-      ```sh
-      dotnet run
-      ```
-    - To run the project in your specific folder, use:
-      ```sh
-      dotnet run --project YourName
-      ```
-
 ## Main Components
+> 
+> Altered version of pseudocodes to help explain it concisely are provided for the main components of the application, including the main method, question processing, data retrieval, answer extraction, similarity calculation, and user interface components.
+> 
+> **Message to the viewer**: *This project was initially created as a study project to demonstrate the implementation of a factoid question-answering system using C#. I was using GitHub to store and control the project and its changes with my team members, and decided to have fun with it and create a relatively decent repository structure for it, since I had the time and the motivation to do so.*
 
 ### 1. Main Method
 The entry point of the application. It sets up the console, prompts the user for data, and enters a loop to process user questions until the user decides to exit.
